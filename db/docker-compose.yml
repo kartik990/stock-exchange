@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  # TimescaleDB Service
+  timescaledb:
+    image: timescale/timescaledb:latest-pg12
+    environment:
+      POSTGRES_PASSWORD: yourpassword       # Change this to your password
+      POSTGRES_DB: timescaledb              # Your database name
+    ports:
+      - "5432:5432"                         # Expose the TimescaleDB port
+    networks:
+      - timescale_network
+    restart: always
+
+  # pgAdmin Service
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "80:80"                            # Expose pgAdmin on port 80
+    networks:
+      - timescale_network
+    restart: always
+
+  # Redis Service
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"                        # Expose Redis port
+    networks:
+      - timescale_network
+    restart: always
+
+# Define the network to connect all services
+networks:
+  timescale_network:
+    driver: bridge
+
+

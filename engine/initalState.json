@@ -1,0 +1,55 @@
+{
+  "orderbooks": [
+    {
+      "baseAsset": "TATA",
+      "bids": [],
+      "asks": [],
+      "lastTradeId": 11404,
+      "currentPrice": 101.25
+    }
+  ],
+  "balances": [
+    [
+      "1",
+      {
+        "INR": { "available": 10000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ],
+    [
+      "2",
+      {
+        "INR": { "available": 100000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ],
+    [
+      "3",
+      {
+        "INR": { "available": 100000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ],
+    [
+      "4",
+      {
+        "INR": { "available": 1000000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ],
+    [
+      "5",
+      {
+        "INR": { "available": 100000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ],
+    [
+      "6",
+      {
+        "INR": { "available": 100000000, "locked": 0 },
+        "TATA": { "available": 4000000, "locked": 0 }
+      }
+    ]
+  ]
+}

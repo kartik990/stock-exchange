@@ -1,0 +1,6 @@
+export const TRADE_ADDED = "TRADE_ADDED";
+export const ORDER_ADDED = "ORDER_ADDED";
+export const ORDER_UPDATE = "ORDER_UPDATE";
+export const ORDER_CANCELLED = "ORDER_CANCELLED";
+export const TRANSACTION_ADDED = "TRANSACTION_ADDED";
+export const SYNC_BALANCES = "SYNC_BALANCES";

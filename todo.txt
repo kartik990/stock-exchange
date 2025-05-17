@@ -1,0 +1,23 @@
+
+
+make graph more real---
+trades history---
+market order---
+
+homepage---
+orders history--- (open close etc meaning and exec.)
+
+balance page---
+    balance INR [from state var.]
+    deposits and withdraws history  [balance in state d & w history on db and sync balance with db every a while like snapshot ]
+
+swap ui fixes--- 
+    (remove bullshit) [loader => clear fields => open orders] 
+sign up  log in etc,
+   global user state / hook
+
+responsiveness
+code refactor
+tests
+
+deployment on aws ec2
