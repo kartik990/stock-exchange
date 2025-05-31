@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircleIcon, Loader2 } from "lucide-react";
+import { useUser } from "@/context/UserContext";
+import { register } from "@/utils/httpClient";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -13,6 +15,8 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const { fetchUser } = useUser();
+
   const handleSignup = async () => {
     setError(null);
     if (!name || !email || !password) {
@@ -20,13 +24,18 @@ export default function SignupPage() {
       return;
     }
 
+    setError(null);
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+
     setLoading(true);
     try {
-      // TODO: Replace with your API call
-      console.log({ name, email, password });
+      await register({ username: name, email, password });
 
-      // Redirect after successful sign up
-      router.push("/login");
+      fetchUser();
+      router.push("/");
     } catch (err: any) {
       setError("Signup failed. Please try again.");
     } finally {
@@ -94,7 +103,7 @@ export default function SignupPage() {
         <p className="text-sm text-gray-400 mt-4 text-center">
           Already have an account?{" "}
           <span
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/auth/sign-in")}
             className="text-blue-400 hover:underline cursor-pointer"
           >
             Login

@@ -34,8 +34,6 @@ portfolioRouter.post("/", async (req, res) => {
     },
   });
 
-  console.log(response.payload);
-
   res.json(response.payload);
 });
 
@@ -66,6 +64,26 @@ portfolioRouter.get("/transactions", async (req, res) => {
   try {
     const trans = await pgClient.query(query, [userId]);
     res.json(trans);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+portfolioRouter.get("/holdings", async (req, res) => {
+  const { userId } = req.query;
+  const query = `SELECT 
+  market AS symbol,
+  SUM(CASE WHEN side = 'buy' THEN quantity ELSE -quantity END) AS quantity,
+  SUM(CASE WHEN side = 'buy' THEN quantity * price ELSE 0 END) / NULLIF(SUM(CASE WHEN side = 'buy' THEN quantity ELSE 0 END), 0) AS avg_buy_price,
+  SUM(CASE WHEN side = 'buy' THEN quantity * price ELSE -quantity * price END) AS total_invested
+  FROM fills
+  WHERE taker_user_id = $1 OR maker_user_id = $1
+  GROUP BY market
+  HAVING SUM(CASE WHEN side = 'buy' THEN quantity ELSE -quantity END) > 0;`;
+
+  try {
+    const holdings = await pgClient.query(query, [userId]);
+    res.json(holdings);
   } catch (err) {
     res.status(500).json({ error: err });
   }

@@ -12,9 +12,20 @@ async function initializeDB() {
   await client.connect();
 
   // Drop existing for clean slate
-  await client.query(
-    `DROP TABLE IF EXISTS orders, fills, balances, deposits, withdrawals;`
-  );
+  await client.query(`
+    DROP TABLE IF EXISTS 
+      orders, fills, balances, deposits, withdrawals, users CASCADE;
+  `);
+
+  // Users table
+  await client.query(`
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL
+    );
+  `);
 
   // Fills table (executed trades)
   await client.query(`

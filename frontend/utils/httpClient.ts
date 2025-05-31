@@ -5,6 +5,45 @@ import { UserBalance, UserTransaction } from "@/hooks/useBalance";
 // const BASE_URL = "https://exchange-proxy.100xdevs.com/api/v1";
 const BASE_URL = "http://localhost:3001/api/v1";
 
+export async function login(email: string, password: string): Promise<any> {
+  const response = await axios.post(
+    `${BASE_URL}/auth/login`,
+    {
+      email,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+
+  return response.data.rows;
+}
+
+export async function register({
+  username,
+  email,
+  password,
+}: {
+  username: string;
+  email: string;
+  password: string;
+}): Promise<UserBalance> {
+  const response = await axios.post(
+    `${BASE_URL}/auth/register`,
+    {
+      username,
+      email,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+
+  return response.data.rows;
+}
+
 export async function getOrders(userId: string): Promise<Order[]> {
   const response = await axios.get(`${BASE_URL}/order?userId=${userId}`);
   return response.data.rows;
@@ -21,6 +60,14 @@ export async function getTransactions(
   const response = await axios.get(
     `${BASE_URL}/portfolio/transactions?userId=${userId}`
   );
+  return response.data?.rows;
+}
+
+export async function getHoldings(userId: string): Promise<UserTransaction[]> {
+  const response = await axios.get(
+    `${BASE_URL}/portfolio/holdings?userId=${userId}`
+  );
+
   return response.data?.rows;
 }
 

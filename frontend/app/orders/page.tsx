@@ -13,11 +13,14 @@ export default function PortfolioPage() {
   }, []);
 
   return (
-    <div className="bg-gray-800 p-10 shadow-lg border border-gray-700">
-      <div className="w-full bg-gray-700 rounded-xl overflow-auto custom-scroll min-h-[75vh] max-h-[50vh] shadow-md p-6">
-        <h2 className="text-2xl font-semibold mb-4">Order List</h2>
-        <table className="min-w-full text-sm text-left table-auto">
-          <thead className="bg-gray-900">
+    <div className="bg-gray-800 p-4 sm:p-6 md:p-10 shadow-lg border border-gray-700 min-h-screen">
+      <div className="w-full bg-gray-700 rounded-xl overflow-x-auto custom-scroll min-h-[60vh] max-h-[85vh] md:max-h-[75vh] shadow-md p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-white">
+          Order List
+        </h2>
+
+        <table className="min-w-[700px] w-full text-sm text-left table-auto">
+          <thead className="bg-gray-900 text-gray-300">
             <tr>
               <th className="px-4 py-2">Market</th>
               <th className="px-4 py-2">Side</th>
@@ -28,14 +31,17 @@ export default function PortfolioPage() {
               <th className="px-4 py-2">Created At</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-white">
             {orders.map((order) => (
-              <tr key={order.id} className="border-b hover:bg-gray-800">
+              <tr
+                key={order.id}
+                className="border-b border-gray-600 hover:bg-gray-800 transition"
+              >
                 <td className="px-4 py-2">{order.market}</td>
                 <td className="px-4 py-2">
                   <span
                     className={`font-medium ${
-                      order.side === "buy" ? "text-green-600" : "text-red-500"
+                      order.side === "buy" ? "text-green-500" : "text-red-500"
                     }`}
                   >
                     {order.side.toUpperCase()}
@@ -68,8 +74,11 @@ export default function PortfolioPage() {
             ))}
           </tbody>
         </table>
+
         {orders.length === 0 && (
-          <div className="text-center py-8 text-gray-500">No orders found.</div>
+          <div className="text-center py-8 text-gray-400 text-sm">
+            No orders found.
+          </div>
         )}
       </div>
     </div>

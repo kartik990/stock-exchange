@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircleIcon, Loader2 } from "lucide-react";
+import { login } from "@/utils/httpClient";
+import { useUser } from "@/context/UserContext";
 
 export default function SigninPage() {
   const router = useRouter();
@@ -11,6 +13,8 @@ export default function SigninPage() {
 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const { fetchUser } = useUser();
 
   const handleSignin = async () => {
     setError(null);
@@ -21,12 +25,10 @@ export default function SigninPage() {
 
     setLoading(true);
     try {
-      // TODO: Replace with your API call
-      console.log({ email, password });
+      await login(email, password);
 
-      // Simulate success and redirect
-      router.push("/dashboard"); // or "/funds" or wherever
-    } catch (err: any) {
+      fetchUser();
+      router.push("/");
       setError("Invalid email or password.");
     } finally {
       setLoading(false);
@@ -79,7 +81,7 @@ export default function SigninPage() {
         <p className="text-sm text-gray-400 mt-4 text-center">
           Don&apos;t have an account?{" "}
           <span
-            onClick={() => router.push("/signup")}
+            onClick={() => router.push("/auth/sign-up")}
             className="text-blue-400 hover:underline cursor-pointer"
           >
             Sign Up

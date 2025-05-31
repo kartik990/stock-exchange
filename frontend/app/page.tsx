@@ -20,8 +20,10 @@ const marketList = [
 
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-8 py-4 pb-8">
-      <h1 className="text-[24px] font-bold mb-4">Welcome to Stock Exchange</h1>
+    <div className="min-h-screen bg-gray-900 text-white px-2 sm:px-8 py-4 pb-8">
+      <h1 className="text-[20px] sm:text-[24px] font-bold mb-4">
+        Welcome to Stock Exchange
+      </h1>
 
       {/* Carousel */}
       <div className="rounded-xl mb-6 overflow-hidden shadow-xl shadow-gray-800 ">
@@ -75,7 +77,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Markets */}
-      <div className="bg-gray-800 rounded-xl p-4 px-6 shadow-lg border border-gray-700">
+      <div className="bg-gray-800 rounded-xl p-4 md:px-6 shadow-lg border border-gray-700">
         <h2 className="text-2xl font-semibold mb-4">Markets</h2>
         <table className="w-full text-left text-sm">
           <thead className="text-gray-400 border-b border-gray-700">

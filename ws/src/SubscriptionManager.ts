@@ -39,7 +39,6 @@ export class SubscriptionManager {
 
   private redisCallbackHandler = (message: string, channel: string) => {
     const parsedMessage = JSON.parse(message);
-    console.log(this.subscriptions);
     this.reverseSubscriptions
       .get(channel)
       ?.forEach((s) =>

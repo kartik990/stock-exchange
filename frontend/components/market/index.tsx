@@ -27,8 +27,8 @@ export default function Market() {
   }
 
   return (
-    <div className="flex bg-gray-950">
-      <div className="flex w-[50%] flex-col">
+    <div className="flex flex-wrap bg-gray-950">
+      <div className="flex w-full lg:w-[50%] flex-col">
         {ticker ? (
           <MarketBar
             ticker={ticker}
@@ -45,7 +45,7 @@ export default function Market() {
         </div>
       </div>
       <div className="border-slate-800 border-l-2"></div>
-      <div className="w-[25%]">
+      <div className="flex-1 lg:w-[25%]">
         <MiddleSection
           currentMarketPrice={currentMarketPrice}
           depth={depth}
@@ -54,7 +54,7 @@ export default function Market() {
         />
       </div>
       <div className="border-slate-800 border-l-2"></div>
-      <div className="w-[25%]">
+      <div className="pb-10 md:pd-0 flex-1 lg:w-[25%] mt-2 sm:mt-0 border-slate-800 border-t-2 sm:border-0">
         <SwapUI
           market={market as string}
           currentMarketPrice={currentMarketPrice}

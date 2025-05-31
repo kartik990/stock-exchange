@@ -24,7 +24,7 @@ const AddFund = ({
   };
 
   return (
-    <div className="w-[360px] mx-auto p-6 bg-white rounded-2xl shadow-md space-y-4">
+    <div className="w-[90vw]  sm:w-[360px] mx-auto p-6 bg-white rounded-2xl shadow-md space-y-4">
       <h2 className="text-xl font-semibold text-gray-800">Add Funds</h2>
 
       <div className="relative">
