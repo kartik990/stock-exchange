@@ -11,8 +11,8 @@ import { authRouter } from "./routes/auth";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3000", // Your Next.js frontend URL
-    credentials: true, // Crucial for cookies
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 app.use(express.json());

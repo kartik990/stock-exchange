@@ -25,3 +25,19 @@ code refactor
 tests
 
 deployment on aws ec2
+
+
+
+
+next tailwind lightweight-charts node klines ws pubsub express typescript
+
+cookie jwt 
+
+asyncrnomos backend communication with redis queues, pubsub and time series data in postgres' timescaledb with material views
+
+aws ec2 nginx docker compose
+
+market makers
+
+
+

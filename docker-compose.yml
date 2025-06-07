@@ -1,0 +1,121 @@
+version: "3.8"
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg12
+    environment:
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: timescaledb
+    ports:
+      - "5432:5432"
+    networks:
+      - timescale_network
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - timescale_network
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8081:80"
+    networks:
+      - timescale_network
+    restart: always
+
+  api:
+    build: ./api
+    networks:
+      - timescale_network
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgres://postgres:yourpassword@timescaledb:5432/timescaledb
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - timescaledb
+      - redis
+
+  ws:
+    build: ./ws
+    networks:
+      - timescale_network
+    ports:
+      - "3002:3002"
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - timescaledb
+      - redis
+
+  engine:
+    build: ./engine
+    networks:
+      - timescale_network
+    environment:
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - timescaledb
+      - redis
+      - api
+      - ws
+
+  db:
+    build: ./db
+    networks:
+      - timescale_network
+    environment:
+      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgres://postgres:yourpassword@timescaledb:5432/timescaledb
+    depends_on:
+      - timescaledb
+      - redis
+      - engine
+      - api
+      - ws
+    restart: on-failure
+
+  mm:
+    build: ./mm
+    networks:
+      - timescale_network
+    depends_on:
+      - timescaledb
+      - redis
+      - api
+      - ws
+      - engine
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - timescale_network
+    environment:
+      NEXT_PUBLIC_API_URL: http://api:3001
+      NODE_ENV: production
+    depends_on:
+      - timescaledb
+      - redis
+      - api
+      - ws
+      - engine
+      - db
+    restart: always
+
+networks:
+  timescale_network:
+    driver: bridge

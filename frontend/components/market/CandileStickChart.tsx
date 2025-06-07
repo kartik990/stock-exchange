@@ -56,6 +56,7 @@ export default function CandlestickChart({ klines }: { klines: KLine[] }) {
       color: "#26a69a",
       priceFormat: { type: "volume" },
       priceScaleId: "volume",
+      // @ts-ignore
       scaleMargins: {
         top: 0.8,
         bottom: 0,
@@ -63,6 +64,7 @@ export default function CandlestickChart({ klines }: { klines: KLine[] }) {
     });
 
     chart.priceScale("volume").applyOptions({
+      // @ts-ignore
       scaleMargins: {
         top: 0.9,
         bottom: 0,
@@ -101,13 +103,17 @@ export default function CandlestickChart({ klines }: { klines: KLine[] }) {
           color: item.open <= item.close ? "#4ade8048" : "#f95b5b4e",
         }));
 
+        // @ts-ignore
         candlestickSeries.setData(candleData);
+        // @ts-ignore
         volumeSeries.setData(volumeData);
 
         const lastTimestamp = candleData[candleData.length - 1]?.time;
         if (lastTimestamp) {
           chart.timeScale().setVisibleRange({
+            // @ts-ignore
             from: lastTimestamp - 8000,
+            // @ts-ignore
             to: lastTimestamp,
           });
         }

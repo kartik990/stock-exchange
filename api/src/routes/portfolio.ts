@@ -5,8 +5,6 @@ import { getPgClient } from "../utils/pgClient";
 
 export const portfolioRouter = Router();
 
-const pgClient = getPgClient();
-
 portfolioRouter.get("/", async (req, res) => {
   const response = await RedisManager.getInstance().sendAndAwait({
     type: GET_BALANCE,
@@ -62,7 +60,10 @@ portfolioRouter.get("/transactions", async (req, res) => {
   ORDER BY created_at DESC;`;
 
   try {
+    const pgClient = await getPgClient();
+
     const trans = await pgClient.query(query, [userId]);
+
     res.json(trans);
   } catch (err) {
     res.status(500).json({ error: err });
@@ -82,6 +83,7 @@ portfolioRouter.get("/holdings", async (req, res) => {
   HAVING SUM(CASE WHEN side = 'buy' THEN quantity ELSE -quantity END) > 0;`;
 
   try {
+    const pgClient = await getPgClient();
     const holdings = await pgClient.query(query, [userId]);
     res.json(holdings);
   } catch (err) {

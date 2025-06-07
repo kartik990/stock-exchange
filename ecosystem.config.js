@@ -6,7 +6,7 @@ module.exports = {
       args: "-c 'npm install && tsc -b && npm run seed:db && npm run refresh:views'",
       cwd: "./db",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "api",
@@ -14,7 +14,7 @@ module.exports = {
       args: "-c 'tsc -b && npm run start'",
       cwd: "./api",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "ws",
@@ -22,7 +22,7 @@ module.exports = {
       args: "-c 'tsc -b && npm run start'",
       cwd: "./ws",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "engine",
@@ -30,7 +30,7 @@ module.exports = {
       args: "-c 'tsc -b && npm run start'",
       cwd: "./engine",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "mm",
@@ -38,7 +38,7 @@ module.exports = {
       args: "-c 'tsc -b && npm run start'",
       cwd: "./mm",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "db-service",
@@ -46,12 +46,12 @@ module.exports = {
       args: "-c 'tsc -b && npm run start'",
       cwd: "./db",
       autorestart: false,
-      wait_ready: false,
+      wait_ready: true,
     },
     {
       name: "frontend",
       script: "bash",
-      args: "-c 'npm install && npm run dev'",
+      args: "-c 'npm install && npm run build && npm run start'",
       cwd: "./frontend",
     },
   ],

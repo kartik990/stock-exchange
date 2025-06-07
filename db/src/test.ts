@@ -4,7 +4,7 @@ import { DbMessage } from "./types";
 
 const pgClient = new Client({
   user: "postgres",
-  host: "localhost",
+  host: "timescaledb",
   database: "timescaledb",
   password: "yourpassword",
   port: 5432,

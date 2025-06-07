@@ -1,34 +1,12 @@
 import { Router } from "express";
 import { getPgClient } from "../utils/pgClient";
 
-const pgClient = getPgClient();
-
 export const klineRouter = Router();
 
 klineRouter.get("/", async (req, res) => {
   const { market, interval, startTime, endTime } = req.query;
 
-  // let query;
-  // switch (interval) {
-  //   case "1m":
-  //     query = `SELECT * FROM klines_1m WHERE bucket >= $1 AND bucket <= $2`;
-  //     break;
-  //   case "1h":
-  //     query = `SELECT * FROM klines_1m WHERE  bucket >= $1 AND bucket <= $2`;
-  //     break;
-  //   case "1w":
-  //     query = `SELECT * FROM klines_1w WHERE bucket >= $1 AND bucket <= $2`;
-  //     break;
-  //   default:
-  //     return res.status(400).send("Invalid interval");
-  // }
-
-  // const result = await pgClient.query(query, [
-  //   new Date(Number(startTime) * 1000),
-  //   new Date(Number(endTime) * 1000),
-  // ]);
-
-  // WHERE currency_code = $1 AND time BETWEEN $2 AND $3
+  const pgClient = await getPgClient();
 
   const query = `SELECT
       time_bucket('1 minute', time) AS bucket,

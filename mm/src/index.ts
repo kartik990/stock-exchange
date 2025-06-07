@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://api:3001";
 const TOTAL_BIDS = 40;
 const TOTAL_ASK = 40;
 const MARKET = "TATA_INR";

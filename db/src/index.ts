@@ -4,7 +4,7 @@ import { DbMessage } from "./types";
 
 const pgClient = new Client({
   user: "postgres",
-  host: "localhost",
+  host: "timescaledb",
   database: "timescaledb",
   password: "yourpassword",
   port: 5432,
@@ -13,7 +13,11 @@ const pgClient = new Client({
 pgClient.connect();
 
 async function main() {
-  const redisClient = createClient();
+  const redisUrl = process.env.REDIS_URL || "localhost:6379";
+  const redisClient = createClient({
+    url: redisUrl,
+  });
+
   await redisClient.connect();
   console.log("✅ Connected to Redis");
 

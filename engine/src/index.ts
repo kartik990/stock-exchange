@@ -3,9 +3,14 @@ import { Engine } from "./trade/Engine";
 
 async function main() {
   const engine = new Engine();
-  const redisClient = createClient();
+  const redisUrl = process.env.REDIS_URL || "localhost:6379";
+  const redisClient = createClient({
+    url: redisUrl,
+  });
+
   await redisClient.connect();
   console.log("connected to redis");
+  console.log("started to listen for messages...");
 
   while (true) {
     const response = await redisClient.rPop("messages" as string);

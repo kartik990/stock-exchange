@@ -2,7 +2,7 @@ const { Client } = require("pg");
 
 const client = new Client({
   user: "postgres",
-  host: "localhost",
+  host: "timescaledb",
   database: "timescaledb",
   password: "yourpassword",
   port: 5432,
@@ -11,7 +11,21 @@ const client = new Client({
 async function initializeDB() {
   await client.connect();
 
+  for (const interval of ["1 minute", "1 hour", "1 day"]) {
+    const viewName = `klines_${interval.replace(" ", "")}`;
+    try {
+      await client.query(
+        `DROP MATERIALIZED VIEW IF EXISTS ${viewName} CASCADE;`
+      );
+      console.log(`Dropped materialized view: ${viewName}`);
+    } catch (error) {
+      console.error(`Error dropping materialized view ${viewName}`);
+    }
+  }
+
   // Drop existing for clean slate
+  await client.query(`DROP TABLE IF EXISTS fills CASCADE;`);
+
   await client.query(`
     DROP TABLE IF EXISTS 
       orders, fills, balances, deposits, withdrawals, users CASCADE;

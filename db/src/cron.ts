@@ -2,7 +2,7 @@ import { Client } from "pg";
 
 const client = new Client({
   user: "postgres",
-  host: "localhost",
+  host: "timescaledb",
   database: "timescaledb",
   password: "yourpassword",
   port: 5432,

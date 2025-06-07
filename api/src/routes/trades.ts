@@ -3,8 +3,6 @@ import { getPgClient } from "../utils/pgClient";
 
 export const tradesRouter = Router();
 
-const pgClient = getPgClient();
-
 tradesRouter.get("/", async (req, res) => {
   const { market } = req.query;
 
@@ -13,6 +11,8 @@ tradesRouter.get("/", async (req, res) => {
                  LIMIT 50`;
 
   try {
+    const pgClient = await getPgClient();
+
     const result = await pgClient.query(query);
 
     res.json(result);

@@ -3,8 +3,6 @@ import { RedisManager } from "../RedisManager";
 import { CREATE_ORDER, CANCEL_ORDER, ON_RAMP, GET_OPEN_ORDERS } from "../types";
 import { getPgClient } from "../utils/pgClient";
 
-const pgClient = getPgClient();
-
 export const orderRouter = Router();
 
 orderRouter.post("/", async (req, res) => {
@@ -48,6 +46,8 @@ orderRouter.get("/open", async (req, res) => {
 
 orderRouter.get("/", async (req, res) => {
   const { userId } = req.query;
+
+  const pgClient = await getPgClient();
 
   const query = `SELECT * FROM orders WHERE user_id = $1 order by created_at DESC LIMIT 250`;
 

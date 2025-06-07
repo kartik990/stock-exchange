@@ -8,9 +8,18 @@ export class RedisManager {
   private static instance: RedisManager;
 
   private constructor() {
-    this.client = createClient();
+    const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
+
+    this.client = createClient({
+      url: redisUrl,
+    });
+
     this.client.connect();
-    this.publisher = createClient();
+
+    this.publisher = createClient({
+      url: redisUrl,
+    });
+
     this.publisher.connect();
   }
 

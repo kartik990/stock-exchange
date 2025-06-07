@@ -2,8 +2,7 @@ import axios from "axios";
 import { Depth, KLine, Order, Ticker, Trade } from "./types";
 import { UserBalance, UserTransaction } from "@/hooks/useBalance";
 
-// const BASE_URL = "https://exchange-proxy.100xdevs.com/api/v1";
-const BASE_URL = "http://localhost:3001/api/v1";
+const BASE_URL = "http://api:3001/api/v1";
 
 export async function login(email: string, password: string): Promise<any> {
   const response = await axios.post(

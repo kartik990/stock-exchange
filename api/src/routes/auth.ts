@@ -6,8 +6,6 @@ import { generateToken } from "../utils/jwt";
 import { getPgClient } from "../utils/pgClient";
 import { serialize } from "cookie";
 
-const pgClient = getPgClient();
-
 const authRouter = Router();
 
 authRouter.post("/register", async (req: Request, res: Response) => {
@@ -15,6 +13,8 @@ authRouter.post("/register", async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
     const hashedPassword = await hashPassword(password);
+
+    const pgClient = await getPgClient();
 
     await pgClient.query(
       `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`,
@@ -52,7 +52,8 @@ authRouter.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Fetch user from PostgreSQL
+    const pgClient = await getPgClient();
+
     const result = await pgClient.query(
       `SELECT id, name, email, password FROM users WHERE email = $1`,
       [email]
