@@ -52,14 +52,19 @@ async function main() {
 
     if (bidsToAdd > 0) {
       const orderPrice = getRandomFloat(100.1 + deviation, 101.5 + deviation);
-      await axios.post(`${BASE_URL}/api/v1/order`, {
-        market: MARKET,
-        price: orderPrice,
-        quantity: quantity,
-        side: "buy",
-        userId: USER_ID,
-      });
-      bidsToAdd--;
+      try {
+        await axios.post(`${BASE_URL}/api/v1/order`, {
+          market: MARKET,
+          price: orderPrice,
+          quantity: quantity,
+          side: "buy",
+          userId: USER_ID,
+        });
+        bidsToAdd--;
+      } catch (err) {
+        console.log("Error in placing buy orders");
+        console.log(err);
+      }
 
       console.log("buy", USER_ID, quantity, orderPrice);
     }
@@ -67,14 +72,19 @@ async function main() {
     if (asksToAdd > 0) {
       const orderPrice = getRandomFloat(100.1 + deviation, 101.5 + deviation);
 
-      await axios.post(`${BASE_URL}/api/v1/order`, {
-        market: MARKET,
-        price: orderPrice,
-        quantity: quantity,
-        side: "sell",
-        userId: USER_ID,
-      });
-      asksToAdd--;
+      try {
+        await axios.post(`${BASE_URL}/api/v1/order`, {
+          market: MARKET,
+          price: orderPrice,
+          quantity: quantity,
+          side: "sell",
+          userId: USER_ID,
+        });
+        asksToAdd--;
+      } catch (err) {
+        console.log("Error in placing sell orders");
+        console.log(err);
+      }
 
       console.log("sell", USER_ID, quantity, orderPrice);
     }
@@ -99,7 +109,13 @@ async function cancelBidsMoreThan(openOrders: any[], price: number) {
       );
     }
   });
-  await Promise.all(promises);
+
+  try {
+    await Promise.all(promises);
+  } catch (err) {
+    console.log("Error in Promise.all cancel bids");
+    console.log(err);
+  }
   return promises.length;
 }
 
@@ -118,7 +134,12 @@ async function cancelAsksLessThan(openOrders: any[], price: number) {
     }
   });
 
-  await Promise.all(promises);
+  try {
+    await Promise.all(promises);
+  } catch (err) {
+    console.log("Error in Promise.all cancel asks");
+    console.log(err);
+  }
   return promises.length;
 }
 

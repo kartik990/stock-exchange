@@ -95,6 +95,7 @@ services:
       - ws
       - engine
       - db
+    restart: on-failure
 
   frontend:
     build:
